@@ -1,0 +1,80 @@
+<div class="row">
+	<div class="col-lg-12">
+		<h1>Register</h1>
+	</div>
+</div>
+<hr>
+<div class="row">
+	<div class="col-xs-6 col-xs-offset-3">
+		<form [formGroup]="editProfileForm" (ngSubmit)="onSubmit()"  >
+	
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="form-group">
+						<label for="name">Name</label>
+						<input [formControlName]="'name'" type="text" name="name" id="name" class="form-control">
+					</div>
+				</div>
+			</div>
+	
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="form-group">
+						<label for="owner_name">Owner's Name</label>
+						<input [formControlName]="'owner_name'" type="text" name="owner_name" id="owner_name" class="form-control">
+					</div>
+				</div>
+			</div>
+	
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="form-group">
+						<label for="registration_number">Registration Number</label>
+						<input [formControlName]="'registration_number'" type="text" name="registration_number" id="registration_number" class="form-control">
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="form-group">
+						<label for="email">Email</label>
+						<input [formControlName]="'email'" type="text" name="email" id="email" class="form-control">
+					</div>
+				</div>
+			</div>
+	
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="form-group">
+						<label for="permanent_wallet">Wallet Address</label>
+						<input [formControlName]="'permanent_wallet'" type="text" name="permanent_wallet" id="permanent_wallet" class="form-control">
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="form-group">
+						<label for="permanent_wallet">Wallet Address</label>
+						<textarea rows=6 [formControlName]="'description'" type="text" name="permanent_wallet" id="permanent_wallet" class="form-control"></textarea>
+					</div>
+				</div>
+			</div>
+	
+			<div class="row" *ngIf="invalid_inputs">
+				<div class="col-xs-12">
+					<p style="color: red">Invalid Inputs</p>
+				</div>
+			</div>
+	
+			<div class="row">
+				<div class="col-xs-12">
+					<button type="submit" class="btn btn-warning col-xs-offset-5 col-xs-2" >Update</button>
+				</div>		
+			</div>
+			<br><br>
+		</form>
+	</div>
+</div>
+		

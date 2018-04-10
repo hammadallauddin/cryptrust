@@ -1,0 +1,18 @@
+<div class="row">
+	<div class="col-lg-12">
+		<h1>Donations</h1>
+	</div>	
+</div>
+<hr>		
+<div class="row" *ngIf="is_logged_in == null">
+	<div class="col-lg-12">
+		<h4>Welcome to Donations Section <a style="cursor:pointer" [routerLink]="'../login'" [queryParamsHandling]="'preserve'" >Login</a> to donate or <a style="cursor:pointer" [routerLink]="'../register'" [queryParamsHandling]="'preserve'">Register</a> if you dont have an account</h4>
+	</div>
+</div>
+
+<div class="row" *ngIf="is_logged_in != null">
+	<div class="col-lg-12">
+		<h4>Welcome to Donations Section Click <a style="cursor:pointer" [routerLink]="'../discover'" [queryParamsHandling]="'preserve'" >here</a> to discover organizations </h4>
+	</div>
+</div>
+	

@@ -1,0 +1,57 @@
+<nav class="navbar navbar-inverse">
+	<div class="container-fluid">
+  
+	  <div class="navbar-header">
+		<a [routerLink] = "''"  class="navbar-brand">CrypTrust</a>
+	  </div>
+  
+	  <div class="collapse navbar-collapse">
+  
+		<ul class="nav navbar-nav navbar-left">
+			<ng-template [ngIf]="state==null">
+					<li [routerLinkActive]="'active'"><a [routerLink] = "'donors/home'" [queryParams]="{state:'d'}">Donors</a></li>
+					<li [routerLinkActive]="'active'"><a [routerLink] = "'organization/home'" [queryParams]="{state:'o'}" >Organizarions</a></li>
+			</ng-template>
+
+			<ng-template [ngIf]="state=='d'">
+				<li [routerLinkActive]="'active'"><a [routerLink] = "'donors/discover'" [queryParamsHandling]="'preserve'">Discover</a></li>
+			
+				<li [routerLinkActive]="'active'"><a [routerLink] = "'donors/home'" [queryParamsHandling]="'preserve'">Home</a></li>
+				
+				<ng-template [ngIf]="auth() == null">
+						<li [routerLinkActive]="'active'"><a [routerLink] = "'donors/login'" [queryParamsHandling]="'preserve'">Login</a></li>
+						<li [routerLinkActive]="'active'"><a [routerLink] = "'donors/register'" [queryParamsHandling]="'preserve'">Register</a></li>
+				</ng-template>
+
+				<ng-template [ngIf]="auth() != null">
+					<li [routerLinkActive]="'active'"><a [routerLink] = "'donors/donations'" [queryParamsHandling]="'preserve'">Donations</a></li>
+					<li [routerLinkActive]="'active'"><a [routerLink] = "'donors/profile/'" [queryParamsHandling]="'preserve'">Profile</a></li>
+				</ng-template>
+			</ng-template>
+
+			<ng-template [ngIf]="state=='o'">
+					<li [routerLinkActive]="'active'"><a [routerLink] = "'organization/home'" [queryParamsHandling]="'preserve'">Home</a></li>
+					
+					<ng-template [ngIf]="authOrg() == null">
+							<li [routerLinkActive]="'active'"><a [routerLink] = "'organization/login'" [queryParamsHandling]="'preserve'">Login</a></li>
+							<li [routerLinkActive]="'active'"><a [routerLink] = "'organization/register'" [queryParamsHandling]="'preserve'">Register</a></li>
+					</ng-template>
+	
+					<ng-template [ngIf]="authOrg() != null">
+						<li [routerLinkActive]="'active'"><a [routerLink] = "'organization/donations'" [queryParamsHandling]="'preserve'">Donations</a></li>
+						<li [routerLinkActive]="'active'"><a [routerLink] = "'organization/profile'" [queryParamsHandling]="'preserve'">Profile</a></li>
+					</ng-template>
+			</ng-template>
+		</ul>
+
+		<ul class="nav navbar-nav navbar-right">			
+			<li *ngIf="state=='d' && auth() != null" [routerLinkActive]="'active'"><a [routerLink] = "'donors/login'" (click)="onLogout()">Logout</a></li>
+		</ul>
+
+		<ul class="nav navbar-nav navbar-right">			
+			<li *ngIf="state=='o' && authOrg() != null" [routerLinkActive]="'active'"><a [routerLink] = "'organization/login'" (click)="onLogoutO()">Logout</a></li>
+		</ul>
+	  </div>
+	</div>
+  </nav>
+  

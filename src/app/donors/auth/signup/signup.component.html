@@ -1,0 +1,97 @@
+<div class="row">
+	<div class="col-lg-12">
+		<h1>Register</h1>
+	</div>
+</div>
+<hr>
+<div class="row">
+		<div class="col-xs-6 col-xs-offset-3">
+			<form [formGroup]="signupForm" (ngSubmit)="onSubmit()"  >
+
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label for="fName">First Name</label>
+							<input [formControlName]="'fName'" type="text" name="fName" id="fName" class="form-control">
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label for="lName">Last Name</label>
+							<input [formControlName]="'lName'" type="text" name="lname" id="lName" class="form-control">
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label for="username">Username</label>
+							<input [formControlName]="'username'" type="text" name="username" id="username" class="form-control">
+						</div>
+					</div>
+				</div>
+
+				<div class="row" *ngIf="userExist && !signupForm.dirty">
+						<div class="col-xs-12">
+							<p style="color: red">Username Already Exist</p>
+						</div>
+					</div>
+
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label for="email">Email</label>
+							<input [formControlName]="'email'" type="text" name="email" id="email" class="form-control">
+						</div>
+					</div>
+				</div>
+
+				<div class="row" *ngIf="emailExist && !signupForm.dirty">
+					<div class="col-xs-12">
+						<p style="color: red">Email Already Exist</p>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label for="password">Password</label>
+							<input [formControlName]="'password'" type="password" name="password" id="password" class="form-control">
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label for="repassword">Repeat Password</label>
+							<input #repass [formControlName]="'repassword'" type="password" name="repassword" id="repassword" class="form-control">
+						</div>
+					</div>
+				</div>
+
+				<div class="row" *ngIf="passwordNotMatch  && !signupForm.dirty">
+					<div class="col-xs-12">
+						<p style="color: red">Password Not Matched</p>
+					</div>
+				</div>
+
+				<div class="row" *ngIf="!signupForm.valid && isSubmitted == true && !signupForm.dirty ">
+					<div class="col-xs-12">
+						<p style="color: red">Invalid Inputs</p>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-xs-12">
+						<button type="submit" class="btn btn-warning col-xs-offset-5 col-xs-2" (click)="submitted()" >Signup</button>
+					</div>		
+				</div>
+			</form>
+		</div>
+	</div>
+	
