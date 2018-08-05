@@ -1,23 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Organization } from './../organization.model';
 import { Http, Response } from '@angular/http';
-import { Router, ActivatedRoute } from '@angular/router';
 import {Location} from '@angular/common';
 
 @Injectable()
 export class OrgAuthService {
 
 	authenticated = null;
-	orgs: Organization[] = [
-		// tslint:disable-next-line:max-line-length
-		new Organization('Edhi Foundation', 'Faisal Edhi', '1234145123', 'abc@gmail.com', 'Description of Edhi Foundation', '0x1982e50d2cab66d150fcd4728beca108e97aed63', '0x1982e50d2cab66d150fcd4728beca108e97aed63', 'hammad'),
-		new Organization('Chippa Foundation', 'Ramzan Chipa', '179723323', 'abc@yahoo.com', 'Description of Chippa Foundation', '0x1982e50d2cab66d150fcd4728beca108e97aed63', '0x1982e50d2cab66d150fcd4728beca108e97aed63', 'hammad')
-	];
+	orgs = [];
 
 	constructor(
 		private http: Http,
-		private router: Router,
-		private route: ActivatedRoute,
 		private location: Location
 	) {}
 
@@ -25,7 +18,6 @@ export class OrgAuthService {
 		this.orgs.push(org);
 		this.http.put('https://cryptrust-dc8a4.firebaseio.com/orgs.json', this.orgs).subscribe(
 			(response) => {
-				this.router.navigate(['../home'], {relativeTo: this.route});
 			},
 			(error) => console.log(error)
 		);
@@ -50,7 +42,7 @@ export class OrgAuthService {
 		let i = 0;
 		if (this.orgs != null) {
 			for (let org of this.orgs) {
-				if (org['email'] === email && org['password'] === password) {
+				if (org['email'] === email && org['password'] === password && org['status']===1) {
 					setTimeout(
 						() => {
 							this.loggedIn(i);

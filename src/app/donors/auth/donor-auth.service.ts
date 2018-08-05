@@ -1,5 +1,3 @@
-import { ActivatedRoute } from '@angular/router';
-import { Router } from '@angular/router';
 import { Donors } from './../donor.model';
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
@@ -13,16 +11,16 @@ export class DonorAuthService {
 			'first_name': 'hammad',
 			'last_name': 'allauddin',
 			'username': 'hammad',
-			'email': 'hammad@mgmail.com',
+			'email': 'hammad@gmail.com',
 			'password': 'hammad',
+			'status': 1
 		}
 	];
 
 	authenticated = null;
 	constructor(
 		private http: Http,
-		private router: Router,
-		private route: ActivatedRoute,
+
 		private location: Location
 	) {}
 
@@ -54,7 +52,7 @@ export class DonorAuthService {
 		let i = 0;
 		if (this.donors != null) {
 			for (let donor of this.donors) {
-				if (donor['email'] === email && donor['password'] === password) {
+				if (donor['email'] === email && donor['password'] === password && donor['status'] === 1) {
 					setTimeout(
 						() => {
 							this.loggedIn(i);

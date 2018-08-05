@@ -1,7 +1,7 @@
 import { Router } from '@angular/router';
 import { Organization } from './../../organizations/organization.model';
 import { Component, OnInit } from '@angular/core';
-import { OrganizationService } from '../../organizations/orgService.service';
+import { OrgAuthService } from '../../organizations/auth/org-auth.sevice';
 
 @Component({
   selector: 'app-discover',
@@ -14,12 +14,12 @@ export class DiscoverComponent implements OnInit {
   filterString = '';
 
   constructor(
-	  	private orgService: OrganizationService,
+		private orgAtuhService: OrgAuthService,
 		private router: Router
 	) { }
 
   ngOnInit() {
-	  this.organizations = this.orgService.orgs;
+	  this.organizations = this.orgAtuhService.getOrgs();
   }
 
   onClick(index: number) {

@@ -19,4 +19,8 @@ export class DonorsService {
 		this.donorsAuthService.updateDonors(this.donors);
 	}
 
+	getAllDonors() {
+		return this.donors.slice();
+	}
+
 }

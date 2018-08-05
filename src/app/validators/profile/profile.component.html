@@ -1,0 +1,84 @@
+<div class="row">
+	<div class="col-lg-12">
+		<h1>Profile</h1>
+	</div>
+</div>
+<hr>
+
+<div class="row">
+	<div class="col-xs-4 col-xs-offset-4">	
+		<button type="button"  class="btn btn-danger col-xs-12" (click)="onProfileEdit()">Edit Profile</button>
+	</div>
+</div>
+<hr>
+
+<div class="row">
+	<div class="col-xs-4 col-xs-offset-4">
+		<h3>Name: {{validator.name}}</h3>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-xs-4 col-xs-offset-4">
+		<h3>Wallet Address: {{validator.address}}</h3>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-xs-4 col-xs-offset-4">
+		<h3>Email: {{validator.email}}</h3>
+	</div>
+</div>
+
+<br>
+<button type="button" *ngIf="changePassword == false" class="btn btn-warning col-xs-4 col-xs-offset-4" (click)="onChangePassword()">Change Password</button>
+<ng-template [ngIf]="changePassword == true">
+	<br><br>
+	<form [formGroup] = "changePasswordForm" (ngSubmit)="onSubmit()" >
+		<div class="row">
+			<div class="col-xs-4 col-xs-offset-4">
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label for="password">Password</label>
+								<input [formControlName]="'password'" type="password" name="password" id="password" class="form-control">
+						</div>
+					</div>
+				</div>
+								
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label for="repassword">Repeat Password</label>
+							<input [formControlName]="'repassword'" type="password" name="repassword" id="repassword" class="form-control">
+						</div>
+					</div>
+				</div>
+				<br>
+				
+				<br>
+				<div class="row" *ngIf="passwordNotMatch  && !changePasswordForm.dirty">
+					<div class="col-xs-12">
+						<p style="color: red">Password Not Matched</p>
+					</div>
+				</div>
+						
+				<div class="row">
+					<div class="col-xs-12">
+						<button class="btn btn-success col-xs-12" type="submit">Submit</button>
+					</div>
+				</div>
+		
+				<br>
+				<div class="row">
+					<div class="col-xs-12">	
+						<button type="button"  class="btn btn-danger col-xs-12" (click)="onCancel()">Cancel</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+	
+</ng-template>
+
+<br><br>

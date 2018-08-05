@@ -9,9 +9,28 @@
   
 		<ul class="nav navbar-nav navbar-left">
 			<ng-template [ngIf]="state==null">
+					<li [routerLinkActive]="'active'"><a [routerLink] = "'admin/home'" [queryParams]="{state:'a'}" >Admin</a></li>
 					<li [routerLinkActive]="'active'"><a [routerLink] = "'donors/home'" [queryParams]="{state:'d'}">Donors</a></li>
 					<li [routerLinkActive]="'active'"><a [routerLink] = "'organization/home'" [queryParams]="{state:'o'}" >Organizarions</a></li>
+					<li [routerLinkActive]="'active'"><a [routerLink] = "'validators/home'" [queryParams]="{state:'v'}" >Validators</a></li>
 			</ng-template>
+
+			<ng-template [ngIf]="state=='a'">
+					
+					<li [routerLinkActive]="'active'"><a [routerLink] = "'admin/home'" [queryParamsHandling]="'preserve'">Home</a></li>
+					
+					<ng-template [ngIf]="authAdmin() == null">
+							<li [routerLinkActive]="'active'"><a [routerLink] = "'admin/login'" [queryParamsHandling]="'preserve'">Login</a></li>
+							<li [routerLinkActive]="'active'"><a [routerLink] = "'admin/register'" [queryParamsHandling]="'preserve'">Register</a></li>
+					</ng-template>
+	
+					<ng-template [ngIf]="authAdmin() != null">
+						<li [routerLinkActive]="'active'"><a [routerLink] = "'admin/profile'" [queryParamsHandling]="'preserve'">Profile</a></li>
+						<li [routerLinkActive]="'active'"><a [routerLink] = "'admin/donors'" [queryParamsHandling]="'preserve'">Donors</a></li>
+						<li [routerLinkActive]="'active'"><a [routerLink] = "'admin/organizations'" [queryParamsHandling]="'preserve'">Organizations</a></li>
+						<li [routerLinkActive]="'active'"><a [routerLink] = "'admin/validators'" [queryParamsHandling]="'preserve'">Validators</a></li>
+					</ng-template>
+				</ng-template>
 
 			<ng-template [ngIf]="state=='d'">
 				<li [routerLinkActive]="'active'"><a [routerLink] = "'donors/discover'" [queryParamsHandling]="'preserve'">Discover</a></li>
@@ -42,15 +61,42 @@
 						<li [routerLinkActive]="'active'"><a [routerLink] = "'organization/profile'" [queryParamsHandling]="'preserve'">Profile</a></li>
 					</ng-template>
 			</ng-template>
+
+			<ng-template [ngIf]="state=='v'">
+				<li [routerLinkActive]="'active'"><a [routerLink] = "'validators/home'" [queryParamsHandling]="'preserve'">Home</a></li>
+				
+				<ng-template [ngIf]="authVal() == null">
+						<li [routerLinkActive]="'active'"><a [routerLink] = "'validators/login'" [queryParamsHandling]="'preserve'">Login</a></li>
+						<li [routerLinkActive]="'active'"><a [routerLink] = "'validators/register'" [queryParamsHandling]="'preserve'">Register</a></li>
+				</ng-template>
+	
+				<ng-template [ngIf]="authVal() != null">
+					<li [routerLinkActive]="'active'"><a [routerLink] = "'validators/profile'" [queryParamsHandling]="'preserve'">Profile</a></li>
+					<li [routerLinkActive]="'active'"><a [routerLink] = "'validators/requets'" [queryParamsHandling]="'preserve'">Requests</a></li>
+				</ng-template>
+		</ng-template>
+
+		</ul>
+
+
+
+
+		<ul class="nav navbar-nav navbar-right">			
+			<li *ngIf="state=='d' && auth() != null" [routerLinkActive]="'active'"><a [routerLink] = "'donors/login'" (click)="onLogout()" [queryParamsHandling]="'preserve'">Logout</a></li>
 		</ul>
 
 		<ul class="nav navbar-nav navbar-right">			
-			<li *ngIf="state=='d' && auth() != null" [routerLinkActive]="'active'"><a [routerLink] = "'donors/login'" (click)="onLogout()">Logout</a></li>
+			<li *ngIf="state=='o' && authOrg() != null" [routerLinkActive]="'active'"><a [routerLink] = "'organization/login'" (click)="onLogoutO()" [queryParamsHandling]="'preserve'">Logout</a></li>
 		</ul>
 
 		<ul class="nav navbar-nav navbar-right">			
-			<li *ngIf="state=='o' && authOrg() != null" [routerLinkActive]="'active'"><a [routerLink] = "'organization/login'" (click)="onLogoutO()">Logout</a></li>
+			<li *ngIf="state=='a' && authAdmin() != null" [routerLinkActive]="'active'"><a [routerLink] = "'admin/login'" (click)="onLogoutA()"[queryParamsHandling]="'preserve'">Logout</a></li>
 		</ul>
+
+		<ul class="nav navbar-nav navbar-right">			
+			<li *ngIf="state=='v' && authVal() != null" [routerLinkActive]="'active'"><a [routerLink] = "'validators/login'" (click)="onLogoutVal()" [queryParamsHandling]="'preserve'">Logout</a></li>
+		</ul>
+
 	  </div>
 	</div>
   </nav>

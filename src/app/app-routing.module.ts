@@ -6,6 +6,8 @@ const appRoutes: Routes = [
 	{path: '', component: HomeComponent, pathMatch: 'full' },
 	{path: 'donors' , loadChildren: './donors/donors.module#DonorsModule' },
 	{path: 'organization' , loadChildren: './organizations/organization.module#OrganizationModule' },
+	{path: 'admin' , loadChildren: './admin/admin.module#AdminModule' },
+	{path: 'validators' , loadChildren: './validators/validators.module#ValidatorModule' }
 ];
 
 @NgModule({

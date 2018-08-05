@@ -1,6 +1,5 @@
 import { OrgAuthGuardService } from './auth/org-auth-guard.service';
 import { OrgHomeComponent } from './org-home/org-home.component';
-import { HomeComponent } from './../core/home/home.component';
 import { RouterModule } from '@angular/router';
 import { OrganizationDetailComponent } from './organization-detail/organization-detail.component';
 import { OrganizationsComponent } from './organizations.component';
@@ -19,7 +18,7 @@ const organizationRoutes: Route[] = [
 		 {path: 'register', component: SignupComponent},
 		 {path: 'profile', component: ProfileComponent, canActivate: [OrgAuthGuardService]},
 		 {path: 'profile/edit', component: ProfileEditComponent, canActivate: [OrgAuthGuardService]},
-		 {path: 'donations', component: DonationsComponent, canActivate: [OrgAuthGuardService]},
+		 {path: 'donations', component: DonationsComponent},
 		{path: 'detail/:id', component: OrganizationDetailComponent},
 	]}
 ];

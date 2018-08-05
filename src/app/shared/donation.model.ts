@@ -1,9 +1,15 @@
 export class Donation {
-	address: string;
+	donor_id: number;
+	sender: string;
+	receiver: string;
 	amount: number;
+	time: string;
 
-	constructor(_address: string, _amount: number) {
-		this.address = _address;
-		this.amount = _amount;
+	constructor(donor_id: number, sender: string, receiver: string, amount: number, _time: string) {
+		this.donor_id = donor_id;
+		this.sender = sender;
+		this.receiver = receiver;
+		this.amount = amount;
+		this.time = _time;
 	}
 }

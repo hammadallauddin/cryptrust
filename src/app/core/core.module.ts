@@ -1,3 +1,4 @@
+import { AdminModule } from './../admin/admin.module';
 import { SharedModule } from './shared.module';
 import { NgModule } from '@angular/core';
 import { HeaderComponent } from './header/header.component';
@@ -11,13 +12,14 @@ import { AppRoutingModule } from '../app-routing.module';
 @NgModule({
 	declarations: [
 		HeaderComponent,
-		HomeComponent
+		HomeComponent,
 	],
 	imports: [
 		AppRoutingModule,
 		SharedModule,
 		DonorsModule,
 		OrganizationModule,
+		AdminModule
 	],
 	exports: [
 		HeaderComponent,

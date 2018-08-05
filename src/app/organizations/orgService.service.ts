@@ -8,14 +8,20 @@ export class OrganizationService {
 	orgs = [];
 	
 	constructor (private orgAuthService: OrgAuthService) {
-		this.orgs = this.orgAuthService.getOrgs();
 	}
 
 	getOrg(index: number) {
+		this.orgs = this.orgAuthService.getOrgs();
 		return this.orgs[index];
 	}
 
+	getAllOrgs() {
+		this.orgs = this.orgAuthService.getOrgs();
+		return this.orgs.slice();
+	}
+
 	updateOrg(org: Organization, index: number) {
+		this.orgs = this.orgAuthService.getOrgs();
 		this.orgs[index]  = org;
 		this.orgAuthService.updateOrgs(this.orgs);
 	}

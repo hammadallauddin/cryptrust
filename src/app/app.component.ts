@@ -7,11 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-	constructor(private orgAtuhService: OrgAuthService) {
+	constructor(private orgAuth: OrgAuthService) {
 		
 	}
 
 	ngOnInit() {
-		this.orgAtuhService.getAllOrgs();
+		this.orgAuth.getAllOrgs();
 	}
 }

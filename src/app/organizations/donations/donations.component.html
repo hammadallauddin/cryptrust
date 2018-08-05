@@ -13,21 +13,21 @@
 				<h2>Amount</h2>
 			</div>
 			<div class="col-xs-3">
-				<h2>Status</h2>
+				<h2>Date</h2>
 			</div>
 		</div>
 	</div>
 	<hr>
-	<div class="row" *ngFor="let donation of donations">
+	<div class="row" *ngFor="let donation of donations | reverse">
 		<div class="col-xs-12">
 			<div class="col-xs-6">
-				<h4>{{donation.from}}</h4>
+				<h4>{{donation.sender}}</h4>
 			</div>
 			<div class="col-xs-3">
 				<h4>{{donation.amount}} Ether</h4>
 			</div>
 			<div class="col-xs-3">
-				<h4>{{donation.status}}</h4>
+				<h4>{{donation.time}}</h4>
 			</div>
 		</div>
 	</div>

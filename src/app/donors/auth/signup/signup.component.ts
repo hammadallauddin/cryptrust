@@ -1,3 +1,4 @@
+import { Router, ActivatedRoute } from '@angular/router';
 import { Donors } from './../../donor.model';
 import { DonorAuthService } from './../donor-auth.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -11,7 +12,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SignupComponent implements OnInit {
 
-  constructor(private donotAuth: DonorAuthService) { }
+  constructor(
+	  private donotAuth: DonorAuthService,
+	  private router: Router,
+	  private route: ActivatedRoute
+	) { }
   isSubmitted = false;
   passwordNotMatch = false;
   emailExist = false;
@@ -26,8 +31,8 @@ export class SignupComponent implements OnInit {
 		'username': new FormControl(null, Validators.required),
 		'email': new FormControl(null, [Validators.required, Validators.email]),
 		'password': new FormControl(null, [Validators.required, Validators.maxLength(10), Validators.minLength(6)]),
-		'repassword': new FormControl(null, [Validators.required, Validators.maxLength(10), Validators.minLength(6)]),
-	  });
+		'repassword': new FormControl(null, [Validators.required, Validators.maxLength(10), Validators.minLength(6)]),	
+	});
   }
   
 
@@ -38,7 +43,8 @@ export class SignupComponent implements OnInit {
 			this.signupForm.value.lName,
 			this.signupForm.value.email,
 			this.signupForm.value.username,
-			this.signupForm.value.password
+			this.signupForm.value.password,
+			1
 		  );
   
 		if (this.signupForm.value.password === this.signupForm.value.repassword) {
@@ -50,6 +56,7 @@ export class SignupComponent implements OnInit {
 				this.passwordNotMatch = false;
 				this.emailExist = false;
 				this.isSubmitted = false;
+				this.router.navigate(['../home'], {relativeTo: this.route, queryParamsHandling: 'preserve'});
 			  } else {
 				this.signupForm.reset();
 				this.userExist = true;
