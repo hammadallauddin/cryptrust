@@ -64,12 +64,10 @@ contract MainContract is Owned {
     //log event for request. 
     event request(uint256 indexed r_id, uint32 indexed con_Id, uint32 amount, address proposed1, address proposed2, address proposed3, address proposed4, address proposed5);
 
-
     //log event for judgement
     event request_result(uint32 indexed _request_id, uint32 indexed _contract_id, bool _judgement);
 
     function createSubContract(address pvt, bytes32 reg) public  onlyowner returns (address) {
-        
         address contractAdd = new SubContract(contract_id, pvt); //added parameters to pass to constructor
         subContracts[contract_id] = contractAdd;
         newContract(contract_id, reg, contractAdd, pvt);
@@ -86,6 +84,17 @@ contract MainContract is Owned {
         return add.balance;
     }
     
+  
+    function ifSeeded(address add) constant returns(bool){
+        SubContract subContract = SubContract(add);
+        return subContract.ifSeeded();
+    }
+    
+    function requestSeeding(address add) {
+        SubContract subContract = SubContract(add);
+        subContract.initialSeeding();
+    }
+
     //register new validator
     function addValidator(address _add) public onlyowner {
         validators[validator_id] = Validator(true, _add);
@@ -178,9 +187,9 @@ contract MainContract is Owned {
 
 contract SubContract {
     uint32 id;
-    address private wallet ;
+    address private wallet;
     address private mainConAdd;
-    bool private seeded = false;
+    bool private seeded;
     
     //emit event for initial seeding
     event init_seed(address indexed contractAddress, bytes32 str);
@@ -193,11 +202,16 @@ contract SubContract {
         mainConAdd = msg.sender;
         wallet = pvt;
     }
+
+    function ifSeeded() payable public returns (bool) {
+        return seeded;
+    }
     
     //will be called by organization from its private address
     function initialSeeding() payable public {
-        if(msg.sender == wallet && seeded == false && address(this).balance > 10) {
+        if(seeded == false && address(this).balance > 10) {
             wallet.transfer(10);
+            seeded = true;
         	init_seed(this, "0xSeeded");
         }
     }

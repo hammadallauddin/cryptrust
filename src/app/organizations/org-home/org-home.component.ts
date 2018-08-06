@@ -11,6 +11,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OrgHomeComponent implements OnInit {
 	is_logged_in = null;
+	initially_seeded = true;
 	org: Organization;
 	balance: string;
 	constructor(
@@ -30,9 +31,40 @@ export class OrgHomeComponent implements OnInit {
 							this.balance = result;
 						}
 					);
+					instance.ifSeeded(this.org.sub_wallet, {from: this.org.sub_wallet, gas: 500000}).then(
+						(result) => {
+							this.initially_seeded = result;
+						}
+					)
 				}
 			);
 		}
+	}
+
+	requestSeeding() {
+		if(+this.balance > 10) {
+			this.contractAccessService.MainContract.deployed().then(
+				(instance) => {
+					const account = this.org.permanent_wallet;
+					this.contractAccessService.web3.personal.unlockAccount(account, 'hammad');
+					instance.requestSeeding(this.org.sub_wallet, {from: account, gas: 500000}).then(
+						() => {
+							instance.getBalance(this.org.sub_wallet).then(
+								(result) => {
+									this.balance = result;
+									this.initially_seeded = true;
+								}
+							);
+						}
+					);
+					
+				}
+			);
+		}
+	}
+
+	requestFunds() {
+
 	}
 
 }

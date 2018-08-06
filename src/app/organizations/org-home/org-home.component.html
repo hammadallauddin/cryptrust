@@ -12,8 +12,12 @@
 <div class="row" *ngIf="is_logged_in != null">
 	<div class="col-lg-12">
 		<h4>Welcome <b>{{org.name}}</b> Your current balance is <b>{{balance}} Ethers</b> Click <a style="cursor:pointer" [routerLink]="'../donations'" [queryParamsHandling]="'preserve'" >here</a> to see donations details</h4>
-		<button class="btn btn-success">Initial Seeding</button>
-		<button class="btn btn-success">Request Funds</button>
+		
+		<button class="btn btn-success" *ngIf="initially_seeded==false; else requestFund"(click) ="requestSeeding()">Initial Seeding</button>
+		<ng-template #requestFund>
+			<button class="btn btn-success" (click)="requestFunds()">Request Funds</button>
+		</ng-template>
+		
 	</div>
 </div>
 		
