@@ -24,14 +24,14 @@ export class ValidatorAuthService {
 
 	createValidator(validator: Validator) {
 		this.validators.push(validator);
-		this.http.put('https://cryptrust-dc8a4.firebaseio.com/validators.json', this.validators).subscribe(
+		this.http.put('https://cryptrust-dc8a4.firebaseio.com/validator.json', this.validators).subscribe(
 			(response) => console.log(response),
 			(error) => console.log(error)
 		);
 	}
 
 	updateValidator(validators: Validator[]) {
-		this.http.put('https://cryptrust-dc8a4.firebaseio.com/validators.json', validators).subscribe(
+		this.http.put('https://cryptrust-dc8a4.firebaseio.com/validator.json', validators).subscribe(
 			(response) => console.log(response),
 			(error) => console.log(error)
 		);
@@ -39,7 +39,7 @@ export class ValidatorAuthService {
 
 
 	getAllValidators() {
-		this.http.get('https://cryptrust-dc8a4.firebaseio.com/validators.json').subscribe(
+		this.http.get('https://cryptrust-dc8a4.firebaseio.com/validator.json').subscribe(
 			(response: Response) => {
 				this.validators = response.json();
 			}
@@ -48,6 +48,7 @@ export class ValidatorAuthService {
 
 	signInValidator(email: string, password: string) {
 		let i = 0;
+		this.getAllValidators();
 		if (this.validators != null) {
 			for (let validator of this.validators) {
 				if (validator['email'] === email && validator['password'] === password && validator['status'] === 1) {

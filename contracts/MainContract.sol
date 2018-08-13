@@ -114,7 +114,6 @@ contract MainContract is Owned {
     
     //request release of funds
     function requestRelease(uint32 contrct_id, uint32 amount) public {
-        
         requests[request_id] = Request(contrct_id, subContracts[contrct_id], amount, validators[random(0)].addrs, validators[random(1)].addrs,validators[random(2)].addrs, validators[random(3)].addrs, validators[random(4)].addrs, 0x0, 0, 0x0, 0, 0x0, 0, false, false);
         request(request_id, contrct_id, amount, requests[request_id].proposed1, requests[request_id].proposed2, requests[request_id].proposed3, requests[request_id].proposed4, requests[request_id].proposed5);
         request_id++;
@@ -209,11 +208,11 @@ contract SubContract {
     
     //will be called by organization from its private address
     function initialSeeding() payable public {
-        if(seeded == false && address(this).balance > 10) {
-            wallet.transfer(10);
-            seeded = true;
-        	init_seed(this, "0xSeeded");
-        }
+        require(seeded == false);
+        require(address(this).balance > 10);
+        wallet.transfer(10);
+        seeded = true;
+    	init_seed(this, "0xSeeded");
     }
 
     //will be called by main contract on validation of spending

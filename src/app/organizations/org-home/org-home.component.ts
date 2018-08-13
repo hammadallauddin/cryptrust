@@ -11,8 +11,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OrgHomeComponent implements OnInit {
 	is_logged_in = null;
+	amount = 0;
+	request_submitted = false;
 	initially_seeded = true;
 	org: Organization;
+	error_while_seeding = false;
+	error_while_funding = false;
 	balance: string;
 	constructor(
 		private orgAuthservice: OrgAuthService,
@@ -60,11 +64,25 @@ export class OrgHomeComponent implements OnInit {
 					
 				}
 			);
+		} else {
+			this.error_while_seeding = true;
 		}
 	}
 
 	requestFunds() {
-
+		this.contractAccessService.MainContract.deployed().then(
+			(instance) => {
+				const account = this.org.permanent_wallet;
+				this.contractAccessService.web3.personal.unlockAccount(account, 'hammad');
+				if(this.amount < +this.balance && this.amount > 0){
+					instance.requestRelease(this.is_logged_in, this.amount, {from: account, gas: 500000});
+					this.request_submitted = true;
+				} else {
+					this.error_while_funding = true;
+				}
+				
+			}
+		);
 	}
 
 }
