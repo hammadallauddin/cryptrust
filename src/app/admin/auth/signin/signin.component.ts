@@ -16,6 +16,7 @@ export class SigninComponent implements OnInit {
 	constructor(private adminAuthService: AdminAuthService) {}
 	
 	ngOnInit() {
+		this.adminAuthService.getAllAdmins();
 		this.signinForm = new FormGroup({
 			'email': new FormControl(null, [Validators.required, Validators.email]),
 			'password': new FormControl(null , [Validators.required, Validators.maxLength(10), Validators.minLength(6)])

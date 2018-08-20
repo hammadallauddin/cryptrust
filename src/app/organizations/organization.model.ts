@@ -7,7 +7,8 @@ export class Organization {
 	permanent_wallet: string;
 	sub_wallet: string;
 	password: string;
-	status: number
+	status: number;
+	seeded: number;
 
 	// tslint:disable-next-line:indent
 	// tslint:disable-next-line:max-line-length
@@ -20,7 +21,8 @@ export class Organization {
 		_permanent_wallet: string,
 		_sub_wallet: string,
 		_password: string,
-		_status: number	
+		_status: number,
+		_seeded: number
 	) {
 			this.name = _name;
 			this.description = _description;
@@ -31,5 +33,6 @@ export class Organization {
 			this.sub_wallet = _sub_wallet;
 			this.password = _password;
 			this.status = _status;
+			this.seeded = _seeded;
 	}
 }

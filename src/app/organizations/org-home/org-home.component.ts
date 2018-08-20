@@ -13,7 +13,7 @@ export class OrgHomeComponent implements OnInit {
 	is_logged_in = null;
 	amount = 0;
 	request_submitted = false;
-	initially_seeded = true;
+	initially_seeded = 0;
 	org: Organization;
 	error_while_seeding = false;
 	error_while_funding = false;
@@ -25,6 +25,9 @@ export class OrgHomeComponent implements OnInit {
 	) { }
 
 	ngOnInit() {
+		if(this.org != null) {
+			this.initially_seeded = this.org.seeded;
+		}
 		this.is_logged_in = this.orgAuthservice.isAuthenticated();
 		if (this.is_logged_in != null) {
 			this.org = this.orgService.getOrg(this.is_logged_in);
@@ -56,7 +59,9 @@ export class OrgHomeComponent implements OnInit {
 							instance.getBalance(this.org.sub_wallet).then(
 								(result) => {
 									this.balance = result;
-									this.initially_seeded = true;
+									this.initially_seeded = 1;
+									this.org.seeded = 1;
+									this.orgService.updateOrg(this.org,this.is_logged_in);
 								}
 							);
 						}

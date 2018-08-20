@@ -13,7 +13,7 @@
 	<div class="col-lg-12">
 		<h4>Welcome <b>{{org.name}}</b> Your current balance is <b>{{balance}} Ethers</b> Click <a style="cursor:pointer" [routerLink]="'../donations'" [queryParamsHandling]="'preserve'" >here</a> to see donations details</h4>
 		
-		<button class="btn btn-success" *ngIf="initially_seeded==false; else requestFund"(click) ="requestSeeding()">Initial Seeding</button>
+		<button class="btn btn-success" *ngIf="initially_seeded==0; else requestFund"(click) ="requestSeeding()">Initial Seeding</button>
 		<ng-template #requestFund>
 			<div *ngIf="request_submitted == false; else showMsg">
 				<br class="col-xs-4">

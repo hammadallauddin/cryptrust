@@ -51,37 +51,22 @@ export class SignupComponent implements OnInit {
 					.then(
 							(result) => {
 								this.accountNotCreated = false;
-								if (this.signupForm.value.password === this.signupForm.value.repassword) {
-									
-									if (this.orgAuth.ifEmailExist(this.signupForm.value.email) === false) {
-									  if (this.orgAuth.ifRegNumberExist(this.signupForm.value.registration_number) === false) {
-										const org = new Organization(
-											this.signupForm.value.name,
-											this.signupForm.value.owner_name,
-											this.signupForm.value.registration_number,
-											this.signupForm.value.email,
-											this.signupForm.value.description,
-											this.signupForm.value.permanent_wallet,
-											result.logs[0].args.contractAddress,
-											this.signupForm.value.password,
-											1
-										  );
-										this.orgAuth.createOrg(org);
-										this.passwordNotMatch = false;
-										this.emailExist = false;
-										this.isSubmitted = false;
-									  } else {
-										this.signupForm.reset();
-										this.regNumberExist = true;
-									  }
-									} else {
-										this.signupForm.reset();
-										this.emailExist = true;
-									}
-								} else {
-								  this.signupForm.reset();
-								  this.passwordNotMatch = true;
-								}
+								const org = new Organization(
+									this.signupForm.value.name,
+									this.signupForm.value.owner_name,
+									this.signupForm.value.registration_number,
+									this.signupForm.value.email,
+									this.signupForm.value.description,
+									this.signupForm.value.permanent_wallet,
+									result.logs[0].args.contractAddress,
+									this.signupForm.value.password,
+									1,
+									0
+									);
+								this.orgAuth.createOrg(org);
+								this.passwordNotMatch = false;
+								this.emailExist = false;
+								this.isSubmitted = false;
 							}
 						)
 				});

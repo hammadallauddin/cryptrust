@@ -44,8 +44,9 @@ export class ValidatorRequestsComponent implements OnInit {
             }
           }
 					  else{
-						console.log('not working');
+            console.log('not working');
             }
+            console.log(this.requests);
 				  }
 			  );
 		  }
@@ -59,7 +60,7 @@ export class ValidatorRequestsComponent implements OnInit {
 				this.contractAccessService.web3.personal.unlockAccount(account, 'hammad');
         instance.validate(request_id, ans, {from: account, gas: 500000}).then(
           () => {
-            console.log("done bc");
+            console.log("done");
           }
         )
 		  }

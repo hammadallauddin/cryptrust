@@ -6,14 +6,7 @@ import {Location} from '@angular/common';
 @Injectable()
 
 export class AdminAuthService {
-	admins: Admin[] = [
-		{
-			'name': 'hammad',
-			'username': 'hammad',
-			'email': 'hammad@gmail.com',
-			'password': 'hammad',
-		}
-	];
+	admins = [];
 
 	authenticated = null;
 	constructor(
@@ -38,7 +31,7 @@ export class AdminAuthService {
 
 
 	getAllAdmins() {
-		this.http.get('https://cryptrust-dc8a4.firebaseio.com/admin.json').subscribe(
+		this.http.get('https://cryptrust-dc8a4.firebaseio.com/admins.json').subscribe(
 			(response: Response) => {
 				this.admins = response.json();
 			}

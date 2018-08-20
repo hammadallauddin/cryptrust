@@ -39,8 +39,8 @@ export class SignupComponent implements OnInit {
 	  if (this.signupForm.valid) {
 		const admin = new Admin(
 			this.signupForm.value.name,
-			this.signupForm.value.email,
 			this.signupForm.value.username,
+			this.signupForm.value.email,
 			this.signupForm.value.password
 		  );
   

@@ -6,15 +6,7 @@ import { Validator } from '../validator.model';
 @Injectable()
 
 export class ValidatorAuthService {
-	validators: Validator[] = [
-		new Validator('hammad',
-        'hammad@gmail.com',
-        'hammad',
-        1,
-		'0x79f59c92c4b43da9d3909b41893d00546bb0e2a1',
-		0
-	)
-	];
+	validators: Validator[] = [];
 
 	authenticated = null;
 	constructor(

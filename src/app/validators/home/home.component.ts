@@ -11,6 +11,7 @@ export class ValidatorHomeComponent implements OnInit {
   constructor(private validatorAuthService: ValidatorAuthService) { }
 
   ngOnInit() {
+    this.validatorAuthService.getAllValidators();
    this.is_logged_in = this.validatorAuthService.isAuthenticated();
   }
 
