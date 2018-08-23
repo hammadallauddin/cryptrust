@@ -34,29 +34,30 @@ export class DonationsComponent implements OnInit, OnDestroy {
 		  (instance) => {
 			  this.event = instance.donation({d_contract: this.org.sub_wallet}, {fromBlock: 0, toBlock: 'latest'}).watch(
 				  (error, result) => {
-					if (!error) {
-						let time = new Date(this.contractAccessService.web3.eth.getBlock(result.blockNumber).timestamp * 1000);
-						let dd = time.getDate();
-						let mm = time.getMonth() + 1;
-						let yyyy = time.getFullYear();
-						let hh = time.getHours();
-						let min = time.getMinutes();
-						let ss = time.getSeconds();
-
-						let date = mm + '/' + dd + '/' + yyyy + ' :: ' + hh + ':' + min + ':' + ss;
-						
-						this.donations.push(new Donation(
-							result.args.d_id,
-							result.args.d_sender,
-							result.args.d_contract,
-							result.args.d_amount,
-							date)
-						);
-					  }
-					  else{
-						console.log('not working');
-					  }
-				  }
+						if (!error) {
+							let time = new Date(this.contractAccessService.web3.eth.getBlock(result.blockNumber).timestamp * 1000);
+							let dd = time.getDate();
+							let mm = time.getMonth() + 1;
+							let yyyy = time.getFullYear();
+							let hh = time.getHours();
+							let min = time.getMinutes();
+							let ss = time.getSeconds();
+	
+							let date = mm + '/' + dd + '/' + yyyy + ' :: ' + hh + ':' + min + ':' + ss;
+							
+							this.donations.push(new Donation(
+								result.args.d_id,
+								result.args.d_sender,
+								result.args.d_contract,
+								result.args.d_amount,
+								result.transactionHash,
+								date
+							));
+							}
+							else{
+							console.log('not working');
+							}
+						}
 			  );
 		  }
 	  )

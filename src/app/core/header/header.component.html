@@ -58,6 +58,7 @@
 	
 					<ng-template [ngIf]="authOrg() != null">
 						<li [routerLinkActive]="'active'"><a [routerLink] = "'organization/donations'" [queryParamsHandling]="'preserve'">Donations</a></li>
+						<li [routerLinkActive]="'active'"><a [routerLink] = "'organization/withdrawal'" [queryParamsHandling]="'preserve'">Withdrawal</a></li>
 						<li [routerLinkActive]="'active'"><a [routerLink] = "'organization/profile'" [queryParamsHandling]="'preserve'">Profile</a></li>
 					</ng-template>
 			</ng-template>

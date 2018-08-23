@@ -67,6 +67,7 @@ export class SignupComponent implements OnInit {
 								this.passwordNotMatch = false;
 								this.emailExist = false;
 								this.isSubmitted = false;
+								console.log(result);
 							}
 						)
 				});

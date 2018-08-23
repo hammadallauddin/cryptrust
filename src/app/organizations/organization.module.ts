@@ -11,6 +11,7 @@ import { OrgHomeComponent } from './org-home/org-home.component';
 import { DonationsComponent } from './donations/donations.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ProfileEditComponent } from './profile/profile-edit/profile-edit.component';
+import { WithdrawalComponent } from './withdrawal/withdrawal.component';
 
 @NgModule({
 	declarations: [
@@ -22,6 +23,7 @@ import { ProfileEditComponent } from './profile/profile-edit/profile-edit.compon
 		DonationsComponent,
 		ProfileComponent,
 		ProfileEditComponent,
+		WithdrawalComponent,
 		
 	],
 	imports: [

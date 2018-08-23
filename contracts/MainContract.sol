@@ -49,9 +49,11 @@ contract MainContract is Owned {
         bool isExamined;
         bool judgement;
     }
-    
+
     mapping(uint32 => Request) requests;
     
+    event released(address indexed contractAddress, uint32 amount);
+
     //log event for new registration of organization
 	event newContract(uint32 indexed id, bytes32 indexed registration, address contractAddress, address indexed walletAddress);
     
@@ -65,7 +67,7 @@ contract MainContract is Owned {
     event request(uint256 indexed r_id, uint32 indexed con_Id, uint32 amount, address proposed1, address proposed2, address proposed3, address proposed4, address proposed5);
 
     //log event for judgement
-    event request_result(uint32 indexed _request_id, uint32 indexed _contract_id, bool _judgement);
+    event request_result(uint32 indexed _request_id, uint32 indexed _contract_id,bool _judgement);
 
     function createSubContract(address pvt, bytes32 reg) public  onlyowner returns (address) {
         address contractAdd = new SubContract(contract_id, pvt); //added parameters to pass to constructor
@@ -114,7 +116,7 @@ contract MainContract is Owned {
     
     //request release of funds
     function requestRelease(uint32 contrct_id, uint32 amount) public {
-        requests[request_id] = Request(contrct_id, subContracts[contrct_id], amount, validators[0].addrs, validators[2].addrs,validators[3].addrs, validators[4].addrs, validators[5].addrs, 0x0, 0, 0x0, 0, 0x0, 0, false, false);
+        requests[request_id] = Request(contrct_id, subContracts[contrct_id], amount, validators[0].addrs, validators[1].addrs,validators[2].addrs, validators[3].addrs, validators[4].addrs, 0x0, 0, 0x0, 0, 0x0, 0, false, false);
         emit request(request_id, contrct_id, amount, requests[request_id].proposed1, requests[request_id].proposed2, requests[request_id].proposed3, requests[request_id].proposed4, requests[request_id].proposed5);
         request_id++;
     }
@@ -159,21 +161,21 @@ contract MainContract is Owned {
             if(requests[_request_id].valid1+requests[_request_id].valid2+requests[_request_id].valid3 < 5) {
                 requests[_request_id].judgement = true;
                 requests[_request_id].isExamined = true;
+
+                SubContract cont = SubContract(requests[_request_id].conAdd);
+                cont.release(requests[_request_id].amount);
             }
             else {
                 requests[_request_id].judgement = false;
                 requests[_request_id].isExamined = true;
             }
             
-            //call subcontract to release funds
-            SubContract cont = SubContract(requests[_request_id].conAdd);
-            cont.release(requests[_request_id].amount);
             
             //log event
             emit request_result(_request_id, requests[_request_id].conId, requests[_request_id].judgement);
             }
     }
-    
+
     
     //"i" is introduced just to get 5 different random numbers for 5 valdators to propose
     function random(uint16 i) private view returns (uint32) {
@@ -215,10 +217,9 @@ contract SubContract {
 
     //will be called by main contract on validation of spending
     function release(uint32 amount) public {
-        if(msg.sender == mainConAdd && address(this).balance > amount) {
-            wallet.transfer(amount);
-            emit released(this, amount);
-        }
+        require(address(this).balance > amount);
+        wallet.transfer(amount);
+        emit released(this, amount);
     }
 
 	function () payable public {  

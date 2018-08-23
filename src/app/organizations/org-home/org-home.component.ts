@@ -18,6 +18,7 @@ export class OrgHomeComponent implements OnInit {
 	error_while_seeding = false;
 	error_while_funding = false;
 	balance: string;
+	address: any;
 	constructor(
 		private orgAuthservice: OrgAuthService,
 		private orgService: OrganizationService,
@@ -31,6 +32,7 @@ export class OrgHomeComponent implements OnInit {
 		this.is_logged_in = this.orgAuthservice.isAuthenticated();
 		if (this.is_logged_in != null) {
 			this.org = this.orgService.getOrg(this.is_logged_in);
+			this.address = this.org.permanent_wallet;
 			this.contractAccessService.MainContract.deployed().then(
 				(instance) => {
 					instance.getBalance(this.org.sub_wallet).then(
@@ -52,10 +54,9 @@ export class OrgHomeComponent implements OnInit {
 		if(+this.balance > 10) {
 			this.contractAccessService.MainContract.deployed().then(
 				(instance) => {
-					const account = this.org.permanent_wallet;
-					this.contractAccessService.web3.personal.unlockAccount(account, 'hammad');
-					instance.requestSeeding(this.org.sub_wallet, {from: account, gas: 500000}).then(
-						() => {
+					instance.requestSeeding(this.org.sub_wallet, {from: this.address, gas: 500000}).then(
+						(result) => {
+							console.log(result);
 							instance.getBalance(this.org.sub_wallet).then(
 								(result) => {
 									this.balance = result;
@@ -77,10 +78,13 @@ export class OrgHomeComponent implements OnInit {
 	requestFunds() {
 		this.contractAccessService.MainContract.deployed().then(
 			(instance) => {
-				const account = this.org.permanent_wallet;
-				this.contractAccessService.web3.personal.unlockAccount(account, 'hammad');
 				if(this.amount < +this.balance && this.amount > 0){
-					instance.requestRelease(this.is_logged_in, this.amount, {from: account, gas: 500000});
+					instance.requestRelease(this.is_logged_in-1, this.amount, {from: this.address, gas: 500000}).then(
+						(result) => {
+							console.log(this.address);
+							console.log(result);
+						}
+					)
 					this.request_submitted = true;
 				} else {
 					this.error_while_funding = true;

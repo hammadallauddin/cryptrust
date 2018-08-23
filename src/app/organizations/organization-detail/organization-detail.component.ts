@@ -122,4 +122,8 @@ export class OrganizationDetailComponent implements OnInit {
 		this.router.navigate(['../../donations'], {relativeTo: this.route, queryParamsHandling: 'preserve'});
 	}
 
+	gotoWithdrawal() {
+		this.router.navigate(['../../withdrawal'], {relativeTo: this.route, queryParamsHandling: 'preserve'});
+	}
+
 }

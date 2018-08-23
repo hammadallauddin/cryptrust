@@ -10,6 +10,7 @@ import { SignupComponent } from './auth/signup/signup.component';
 import { DonationsComponent } from './donations/donations.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ProfileEditComponent } from './profile/profile-edit/profile-edit.component';
+import { WithdrawalComponent } from './withdrawal/withdrawal.component';
 
 const organizationRoutes: Route[] = [
 	{path: '' , component: OrganizationsComponent , children: [
@@ -19,6 +20,7 @@ const organizationRoutes: Route[] = [
 		 {path: 'profile', component: ProfileComponent, canActivate: [OrgAuthGuardService]},
 		 {path: 'profile/edit', component: ProfileEditComponent, canActivate: [OrgAuthGuardService]},
 		 {path: 'donations', component: DonationsComponent},
+		 {path: 'withdrawal', component: WithdrawalComponent},
 		{path: 'detail/:id', component: OrganizationDetailComponent},
 	]}
 ];

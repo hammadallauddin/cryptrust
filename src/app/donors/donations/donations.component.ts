@@ -40,6 +40,7 @@ export class DonationsComponent implements OnInit, OnDestroy {
 							result.args.d_sender,
 							result.args.d_contract,
 							result.args.d_amount,
+							result.transactionHash,
 							date
 						));
 					  }

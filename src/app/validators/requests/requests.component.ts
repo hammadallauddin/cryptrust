@@ -14,6 +14,7 @@ export class ValidatorRequestsComponent implements OnInit {
 	id: number;
   event: any;
   validator: Validator;
+  address:any;
   constructor(
     private contractAccessService: ContractAccessService,
     private validatorAuth: ValidatorAuthService,
@@ -23,12 +24,13 @@ export class ValidatorRequestsComponent implements OnInit {
   ngOnInit() {
     this.id = this.validatorAuth.isAuthenticated();
     this.validator = this.validatorService.getValidator(this.id); 
+    this.address = this.validator.address;
 	  this.contractAccessService.MainContract.deployed().then(
 		  (instance) => {
 			  this.event = instance.request({}, {fromBlock: 0, toBlock: 'latest'}).watch(
 				  (error, result) => {
 					if (!error) {
-            if(this.validator.address == result.args.proposed1 || this.validator.address == result.args.proposed2 || this.validator.address == result.args.proposed3 || this.validator.address == result.args.proposed4 || this.validator.address == result.args.proposed5) {
+            if(this.address == result.args.proposed1 || this.address == result.args.proposed2 || this.address == result.args.proposed3 || this.address == result.args.proposed4 || this.address == result.args.proposed5) {
               this.requests.push({
                 amount: result.args.amount.c[0],
                 contract_id: result.args.con_Id.c[0],
@@ -56,11 +58,9 @@ export class ValidatorRequestsComponent implements OnInit {
   validate(request_id: number, ans: boolean) {
     this.contractAccessService.MainContract.deployed().then(
 		  (instance) => {
-        const account = this.validator.address;
-				this.contractAccessService.web3.personal.unlockAccount(account, 'hammad');
-        instance.validate(request_id, ans, {from: account, gas: 500000}).then(
-          () => {
-            console.log("done");
+        instance.validate(request_id, ans, {from: this.address, gas: 500000}).then(
+          (result) => {
+            console.log(result);
           }
         )
 		  }

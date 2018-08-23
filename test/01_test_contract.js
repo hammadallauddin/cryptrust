@@ -119,16 +119,51 @@ contract('MainContact', function (accounts) {
 
 
     it('should do first validation', async function() {
-        lastTx = await  mainContract.validate(this.request_id,true,{from: "0x9ec63a3f1fadf73381bb23aaca495ebf0a515c99"} );
+        lastTx = await  mainContract.validate(this.request_id,true,{from: "0x9ec63a3f1fadf73381bb23aaca495ebf0a515c99" , gas: 917150});
     });
 
 
     it('should do second validation', async function() {
-        lastTx = await  mainContract.validate(this.request_id,true,{from: "0xaf74ea844cbb3cd71e07035b81d0e4d295080f88"} );
+        lastTx = await  mainContract.validate(this.request_id,true,{from: "0xaf74ea844cbb3cd71e07035b81d0e4d295080f88", gas: 917150} );
     });
 
     it('should do third validation', async function() {
-        lastTx = await  mainContract.validate(this.request_id,true,{from: "0x3149575d003d2ebda748ea9c4f06dae5527eb8ed"} );
+        lastTx = await  mainContract.validate(this.request_id,false,{from: "0x3149575d003d2ebda748ea9c4f06dae5527eb8ed", gas: 917150} );
+        this.new_balance = web3.eth.getBalance(this.sub_contract);
+        assert.equal(1890, this.new_balance)
+
+        console.log(lastTx.logs);
+        assert.equal(lastTx.logs[0].event, "request_result");
+    });
+
+
+    it('should request for releasing some amount again', async function() {
+        lastTx = await  mainContract.requestRelease(this.contract_id,100);
+        assert.equal(lastTx.logs[0].event, "request");
+        this.request_id = lastTx.logs[0].args.r_id.c[0];
+        this.amount = lastTx.logs[0].args.amount.c[0]; 
+        this.p1 = lastTx.logs[0].args.proposed1;
+        this.p2 = lastTx.logs[0].args.proposed2;
+        this.p3 = lastTx.logs[0].args.proposed3;
+        this.p4 = lastTx.logs[0].args.proposed4;
+        this.p5 = lastTx.logs[0].args.proposed5;
+        console.log(lastTx.logs[0].args);
+    });
+
+
+
+
+    it('should do first validation again', async function() {
+        lastTx = await  mainContract.validate(this.request_id,false,{from: "0x9ec63a3f1fadf73381bb23aaca495ebf0a515c99", gas: 917150} );
+    });
+
+
+    it('should do second validation again', async function() {
+        lastTx = await  mainContract.validate(this.request_id,false,{from: "0xaf74ea844cbb3cd71e07035b81d0e4d295080f88" , gas: 917150} );
+    });
+
+    it('should do third validation again', async function() {
+        lastTx = await  mainContract.validate(this.request_id,true,{from: "0x3149575d003d2ebda748ea9c4f06dae5527eb8ed" , gas: 917150} );
         this.new_balance = web3.eth.getBalance(this.sub_contract);
         assert.equal(1890, this.new_balance)
 
