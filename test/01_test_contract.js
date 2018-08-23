@@ -133,7 +133,7 @@ contract('MainContact', function (accounts) {
         assert.equal(1890, this.new_balance)
 
         console.log(lastTx.logs);
-        assert.equal(lastTx.logs[0].event, "request_result");
+        
     });
 
 

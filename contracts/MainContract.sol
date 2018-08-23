@@ -52,8 +52,6 @@ contract MainContract is Owned {
 
     mapping(uint32 => Request) requests;
     
-    event released(address indexed contractAddress, uint32 amount);
-
     //log event for new registration of organization
 	event newContract(uint32 indexed id, bytes32 indexed registration, address contractAddress, address indexed walletAddress);
     
@@ -68,6 +66,9 @@ contract MainContract is Owned {
 
     //log event for judgement
     event request_result(uint32 indexed _request_id, uint32 indexed _contract_id,bool _judgement);
+
+    //emit event for released funds
+    event released(address indexed contractAddress, uint32 amount);
 
     function createSubContract(address pvt, bytes32 reg) public  onlyowner returns (address) {
         address contractAdd = new SubContract(contract_id, pvt); //added parameters to pass to constructor
@@ -164,6 +165,7 @@ contract MainContract is Owned {
 
                 SubContract cont = SubContract(requests[_request_id].conAdd);
                 cont.release(requests[_request_id].amount);
+                emit released(requests[_request_id].conAdd, requests[_request_id].amount);
             }
             else {
                 requests[_request_id].judgement = false;
@@ -192,9 +194,6 @@ contract SubContract {
     
     //emit event for initial seeding
     event init_seed(address indexed contractAddress, bytes32 str);
-    
-    //emit event for released funds
-    event released(address indexed contractAddress, uint32 amount);
 
     constructor (uint32 _id, address pvt) payable public  {
         id = _id;
@@ -219,7 +218,6 @@ contract SubContract {
     function release(uint32 amount) public {
         require(address(this).balance > amount);
         wallet.transfer(amount);
-        emit released(this, amount);
     }
 
 	function () payable public {  

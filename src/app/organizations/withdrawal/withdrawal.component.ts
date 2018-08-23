@@ -12,7 +12,7 @@ import { Withdrawal } from '../../shared/withdrawal.model';
   styleUrls: ['./withdrawal.component.css']
 })
 export class WithdrawalComponent implements OnInit {
-  withdrawal = [];
+  withdrawals = [];
 	id: null;
 	org: Organization;
 	event: any;
@@ -35,7 +35,7 @@ export class WithdrawalComponent implements OnInit {
 			  this.event = instance.released({contractAddress: this.org.sub_wallet}, {fromBlock: 0, toBlock: 'latest'}).watch(
 				  (error, result) => {
 						if (!error) {	
-							this.withdrawal.push(new Withdrawal(
+							this.withdrawals.push(new Withdrawal(
 								result.args.contractAddress,
 								result.args.amount,
 								result.transactionHash
